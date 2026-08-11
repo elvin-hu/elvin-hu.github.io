@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ito: Real-time Browser Tab Orchestration Through Intent Detection</title>
+<meta name="description" content="Ito replaces the flat tab strip with a sidebar of Flows: clusters of webpages grouped by inferred intent rather than by domain or topic. UIST 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/project.css">
+</head>
+<body>
+
+<main class="page page--project">
+
+  <a class="back" href="../">← Elvin Hu</a>
+
+  <header class="masthead">
+    <h1 class="masthead__title">
+      Ito: Real-time Browser Tab Orchestration Through Intent Detection
+    </h1>
+    <p class="masthead__authors">
+      <span>Elvin Hu</span>,
+      <a href="https://nomouth.studio/">Jasmine Sumpter</a>,
+      <a href="https://takatoshiyoshida.myportfolio.com/">Takatoshi Yoshida</a>,
+      <a href="https://mauriciosousa.github.io/">Mauricio Sousa</a>,
+      <a href="https://www.kmd.keio.ac.jp/faculty/kouta-minamizawa/">Kouta Minamizawa</a>
+    </p>
+    <p class="masthead__affiliation">
+      Keio University Graduate School of Media Design
+    </p>
+    <p class="masthead__venue">
+      UIST 2026, Detroit, MI · Accepted
+    </p>
+
+    <nav class="buttons">
+      <a class="button" href="https://arxiv.org/abs/2608.09107">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h7l3.5 3.5V14H3V2zm6.5 1v3h3l-3-3zM5 8h6v1H5V8zm0 2.5h6v1H5v-1z"/></svg>
+        arXiv
+      </a>
+      <span class="button button--muted">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .8a7.2 7.2 0 0 0-2.28 14c.36.07.49-.15.49-.35v-1.23c-2 .44-2.43-.96-2.43-.96-.33-.84-.8-1.06-.8-1.06-.66-.45.05-.44.05-.44.73.05 1.11.75 1.11.75.65 1.1 1.7.79 2.11.6.07-.47.25-.79.46-.97-1.6-.18-3.28-.8-3.28-3.56 0-.79.28-1.43.74-1.93-.07-.19-.32-.92.07-1.91 0 0 .6-.2 1.98.73a6.9 6.9 0 0 1 3.6 0c1.37-.93 1.97-.73 1.97-.73.4.99.15 1.72.07 1.9.47.51.75 1.15.75 1.94 0 2.77-1.69 3.38-3.29 3.56.26.22.49.66.49 1.33v1.97c0 .2.13.42.49.35A7.2 7.2 0 0 0 8 .8z"/></svg>
+        GitHub — coming soon
+      </span>
+    </nav>
+  </header>
+
+  <section class="abstract">
+    <p>
+      People routinely interleave activities while browsing the web, often
+      simultaneously and with overlapping boundaries. Yet organizational primitives
+      in modern browsers treat every tab uniformly, offering no structural awareness
+      of which items serve which purpose. While task-based organization approaches
+      exist, they typically require users to manually organize or invoke
+      reorganization features, and quickly fall out of sync as user intents evolve.
+      To address this, we present Ito, a mixed-initiative approach that infers user
+      intent in real time and organizes browsing activities into dynamic collections
+      called Flows. Ito continuously reads unfolding user context, determines
+      moment-to-moment focus, and creates, restructures, hibernates, and awakens
+      Flows in real time while preserving user control through a mixed-initiative
+      loop of proposals and corrections. In a controlled lab study (N=12) and a
+      two-week field study (N=11), results suggest that Ito's intent-driven Flows
+      aligned more closely with participants' mental models, facilitated task
+      switching and navigation more effectively, and reduced management burden
+      without loss of perceived control.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2 class="section__heading">Video Walkthrough</h2>
+    <video class="media media--wide" controls preload="metadata"
+           poster="../assets/video/walkthrough-poster.jpg">
+      <source src="../assets/video/walkthrough.mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <section class="section">
+    <h2 class="section__heading">The Intent Lifecycle</h2>
+    <ol class="lifecycle">
+
+      <li class="lifecycle__phase">
+        <video class="media media--square" autoplay muted loop playsinline
+               preload="metadata" disablepictureinpicture>
+          <source src="../assets/video/lifecycle-creation.mp4" type="video/mp4">
+        </video>
+        <p class="lifecycle__name">Creation</p>
+        <p class="lifecycle__desc">
+          A page that matches no existing intent seeds a new Flow, named for what it
+          is for rather than what it contains.
+        </p>
+      </li>
+
+      <li class="lifecycle__phase">
+        <video class="media media--square" autoplay muted loop playsinline
+               preload="metadata" disablepictureinpicture>
+          <source src="../assets/video/lifecycle-restructuring.mp4" type="video/mp4">
+        </video>
+        <p class="lifecycle__name">Restructuring</p>
+        <p class="lifecycle__desc">
+          As intent shifts, Flows are renamed, merged, or split. Corrections made by
+          hand are preserved and fed back.
+        </p>
+      </li>
+
+      <li class="lifecycle__phase">
+        <video class="media media--square" autoplay muted loop playsinline
+               preload="metadata" disablepictureinpicture>
+          <source src="../assets/video/lifecycle-hibernation.mp4" type="video/mp4">
+        </video>
+        <p class="lifecycle__name">Hibernation</p>
+        <p class="lifecycle__desc">
+          A Flow set aside is serialized and its tabs closed, leaving the thread of
+          engagement intact without the cost of keeping it open.
+        </p>
+      </li>
+
+      <li class="lifecycle__phase">
+        <video class="media media--square" autoplay muted loop playsinline
+               preload="metadata" disablepictureinpicture>
+          <source src="../assets/video/lifecycle-resumption.mp4" type="video/mp4">
+        </video>
+        <p class="lifecycle__name">Resumption</p>
+        <p class="lifecycle__desc">
+          When a related page reappears, Ito offers to restore the dormant Flow whole,
+          with its name, colour, and pages returned.
+        </p>
+      </li>
+
+    </ol>
+  </section>
+
+  <section class="section">
+    <h2 class="section__heading">BibTeX</h2>
+    <div class="bibtex">
+      <button class="bibtex__copy" type="button">Copy</button>
+      <pre><code>@inproceedings{hu2026ito,
+  title     = {Ito: Real-time Browser Tab Orchestration Through Intent Detection},
+  author    = {Hu, Elvin and Sumpter, Jasmine and Yoshida, Takatoshi
+               and Sousa, Mauricio and Minamizawa, Kouta},
+  booktitle = {Proceedings of the 39th Annual ACM Symposium on User Interface
+               Software and Technology (UIST '26)},
+  year      = {2026},
+  address   = {Detroit, MI, USA},
+  publisher = {ACM}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="license">
+    This page is licensed under a
+    <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">Creative
+    Commons Attribution 4.0 International License</a>.
+  </footer>
+
+</main>
+
+<script>
+  document.querySelector('.bibtex__copy').addEventListener('click', async (event) => {
+    const button = event.currentTarget;
+    const code = document.querySelector('.bibtex code');
+
+    try {
+      await navigator.clipboard.writeText(code.textContent);
+      button.textContent = 'Copied';
+    } catch {
+      // Clipboard access can be refused when the document is not focused.
+      // Select the entry instead so it can be copied by hand.
+      const range = document.createRange();
+      range.selectNodeContents(code);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      button.textContent = 'Press ⌘C';
+    }
+
+    setTimeout(() => { button.textContent = 'Copy'; }, 1600);
+  });
+
+  // The clips carry autoplay so they run even if this never fires; the observer
+  // keeps off-screen ones paused in browsers that do not do it themselves.
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.play().catch(() => {});
+      } else {
+        entry.target.pause();
+      }
+    }
+  }, { threshold: 0.25 });
+
+  document.querySelectorAll('.media--square').forEach((video) => {
+    observer.observe(video);
+  });
+</script>
+
+</body>
+</html>

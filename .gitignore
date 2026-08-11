@@ -1,0 +1,5 @@
+# Raw screen recordings and the ProRes walkthrough master, kept for reference. The
+# site only ships the encoded clips in assets/video/; 3GB is not worth versioning.
+assets/video/source/
+*.mov
+.DS_Store

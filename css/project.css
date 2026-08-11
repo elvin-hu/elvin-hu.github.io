@@ -1,0 +1,237 @@
+/* ---------------------------------------------------------------------------
+   Project page
+   Layered on top of style.css. Wider measure, centred masthead.
+--------------------------------------------------------------------------- */
+
+.page--project {
+  --measure: 54rem;
+  padding-top: 5rem;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 3.5rem;
+  font-size: var(--step--1);
+  color: var(--text-tertiary);
+  border-bottom: none;
+}
+
+.back:hover {
+  color: var(--text);
+}
+
+/* Masthead ---------------------------------------------------------------- */
+
+.masthead {
+  text-align: center;
+  margin-bottom: 4.5rem;
+}
+
+.masthead__title {
+  max-width: 34ch;
+  margin: 0 auto 1.5rem;
+  font-size: clamp(2rem, 1.35rem + 2.6vw, 2.875rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.masthead__authors {
+  max-width: 44ch;
+  margin: 0 auto 0.5rem;
+  color: var(--text);
+}
+
+/* Wrap between authors, never inside a name. */
+.masthead__authors span,
+.masthead__authors a {
+  white-space: nowrap;
+}
+
+/* Affiliation and venue read as one continuation of the author line, so they
+   stay in the same colour rather than fading off into a second grey. */
+.masthead__affiliation,
+.masthead__venue {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--text);
+}
+
+.masthead__venue {
+  margin-top: 0.375rem;
+}
+
+/* Link buttons ------------------------------------------------------------ */
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.125rem;
+  border: 1px solid var(--border-control);
+  border-radius: 100px;
+  font-size: var(--step--1);
+  color: var(--text);
+  background: var(--bg);
+  transition: background-color 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+
+.button:hover {
+  background: var(--surface);
+  border-color: var(--text-tertiary);
+}
+
+/* Not a control yet, so it is exempt from the 3:1 boundary the live buttons
+   carry, and the softer edge is what marks it as unavailable. */
+.button--muted {
+  color: var(--text-tertiary);
+  border-color: var(--border);
+  cursor: default;
+  pointer-events: none;
+}
+
+.button svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  fill: currentColor;
+}
+
+/* Sections ---------------------------------------------------------------- */
+
+.page--project .section {
+  margin-top: 5.5rem;
+}
+
+.abstract {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+/* Media ------------------------------------------------------------------- */
+
+.media {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  object-fit: cover;
+}
+
+.media--wide {
+  aspect-ratio: 16 / 9;
+}
+
+/* Lifecycle clips loop on their own: no chrome, nothing to click. iOS Safari
+   forces its own controls onto inline video unless they are hidden here. */
+.media--square {
+  aspect-ratio: 1 / 1;
+  pointer-events: none;
+}
+
+.media--square::-webkit-media-controls,
+.media--square::-webkit-media-controls-enclosure,
+.media--square::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
+
+/* Intent lifecycle: 2 × 2 ------------------------------------------------- */
+
+.lifecycle {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 1.75rem;
+  row-gap: 3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lifecycle__name {
+  margin: 1.125rem 0 0;
+  font-size: var(--step-0);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.lifecycle__desc {
+  margin: 0.3rem 0 0;
+  max-width: 34ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+
+/* BibTeX ------------------------------------------------------------------ */
+
+.bibtex {
+  position: relative;
+}
+
+.bibtex pre {
+  margin: 0;
+  padding: 1.25rem 1.375rem;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: var(--step--2);
+  line-height: 1.65;
+  color: var(--text-secondary);
+  tab-size: 2;
+}
+
+.bibtex__copy {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border-control);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--step--2);
+  cursor: pointer;
+  transition: color 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+
+.bibtex__copy:hover {
+  color: var(--text);
+  border-color: var(--text-tertiary);
+}
+
+/* License ----------------------------------------------------------------- */
+
+.license {
+  margin-top: 4.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: var(--step--2);
+  color: var(--text-tertiary);
+}
+
+/* The underline already marks the link, so it keeps the sentence's colour
+   instead of introducing a second grey mid-sentence. */
+.license a {
+  color: inherit;
+}
+
+@media (max-width: 40rem) {
+  .lifecycle {
+    grid-template-columns: 1fr;
+    row-gap: 2.25rem;
+  }
+}
