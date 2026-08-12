@@ -27,13 +27,17 @@
   margin-bottom: 4.5rem;
 }
 
+/* The title sets to two lines only just: its best two-line break needs about as
+   much room as the text measure gives it, and at 2.875rem/-0.025em it overshot
+   by a hair and dropped to three. The tighter tracking is what large sizes want
+   anyway, and together with the slightly smaller cap it leaves real headroom so
+   the break does not flip back on a font fallback or another engine's metrics. */
 .masthead__title {
-  max-width: 34ch;
   margin: 0 auto 1.5rem;
-  font-size: clamp(2rem, 1.35rem + 2.6vw, 2.875rem);
+  font-size: clamp(2rem, 1.35rem + 2.6vw, 2.8rem);
   font-weight: 500;
   line-height: 1.2;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.032em;
   text-wrap: balance;
 }
 
@@ -155,6 +159,33 @@
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+/* Autoplay is refused often enough on phones — Low Power Mode, Low Data Mode, a
+   reduced-motion preference — that the clips need a way back. The poster always
+   renders, so the fallback only has to say the clip can be started by hand.
+   Set by script, and only when an attempt to play has actually been rejected. */
+.lifecycle__phase[data-needs-tap] {
+  position: relative;
+}
+
+.lifecycle__phase[data-needs-tap] .media--square {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.lifecycle__phase[data-needs-tap]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  aspect-ratio: 1 / 1;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 52px 52px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 52'%3E%3Ccircle cx='26' cy='26' r='26' fill='rgba(17,17,17,0.55)'/%3E%3Cpath d='M20 16v20l16-10z' fill='white'/%3E%3C/svg%3E");
 }
 
 .lifecycle__name {

@@ -82,7 +82,8 @@
 
       <li class="lifecycle__phase">
         <video class="media media--square" autoplay muted loop playsinline
-               preload="metadata" disablepictureinpicture>
+               preload="metadata" disablepictureinpicture
+               poster="../assets/video/lifecycle-creation-poster.jpg">
           <source src="../assets/video/lifecycle-creation.mp4" type="video/mp4">
         </video>
         <p class="lifecycle__name">Creation</p>
@@ -94,7 +95,8 @@
 
       <li class="lifecycle__phase">
         <video class="media media--square" autoplay muted loop playsinline
-               preload="metadata" disablepictureinpicture>
+               preload="metadata" disablepictureinpicture
+               poster="../assets/video/lifecycle-restructuring-poster.jpg">
           <source src="../assets/video/lifecycle-restructuring.mp4" type="video/mp4">
         </video>
         <p class="lifecycle__name">Restructuring</p>
@@ -106,7 +108,8 @@
 
       <li class="lifecycle__phase">
         <video class="media media--square" autoplay muted loop playsinline
-               preload="metadata" disablepictureinpicture>
+               preload="metadata" disablepictureinpicture
+               poster="../assets/video/lifecycle-hibernation-poster.jpg">
           <source src="../assets/video/lifecycle-hibernation.mp4" type="video/mp4">
         </video>
         <p class="lifecycle__name">Hibernation</p>
@@ -118,7 +121,8 @@
 
       <li class="lifecycle__phase">
         <video class="media media--square" autoplay muted loop playsinline
-               preload="metadata" disablepictureinpicture>
+               preload="metadata" disablepictureinpicture
+               poster="../assets/video/lifecycle-resumption-poster.jpg">
           <source src="../assets/video/lifecycle-resumption.mp4" type="video/mp4">
         </video>
         <p class="lifecycle__name">Resumption</p>
@@ -178,21 +182,54 @@
     setTimeout(() => { button.textContent = 'Copy'; }, 1600);
   });
 
-  // The clips carry autoplay so they run even if this never fires; the observer
-  // keeps off-screen ones paused in browsers that do not do it themselves.
+  // The clips carry autoplay so they run even if this never fires, and the
+  // observer keeps off-screen ones paused in browsers that do not do it
+  // themselves. Phones refuse autoplay often enough — Low Power Mode, Low Data
+  // Mode, a reduced-motion preference — that a refusal has to be caught rather
+  // than swallowed, otherwise the clip sits there looking broken. The poster
+  // covers the gap and the phase is marked so it can be tapped instead.
+  const clips = document.querySelectorAll('.media--square');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const needsTap = (video, wanted) => {
+    video.closest('.lifecycle__phase')?.toggleAttribute('data-needs-tap', wanted);
+  };
+
+  const attemptPlay = (video) => {
+    if (reduceMotion.matches) {
+      video.pause();
+      needsTap(video, true);
+      return;
+    }
+    // Older browsers return nothing from play() rather than a promise.
+    video.play()?.then(() => needsTap(video, false))
+                 .catch(() => needsTap(video, true));
+  };
+
   const observer = new IntersectionObserver((entries) => {
     for (const entry of entries) {
       if (entry.isIntersecting) {
-        entry.target.play().catch(() => {});
+        attemptPlay(entry.target);
       } else {
         entry.target.pause();
       }
     }
   }, { threshold: 0.25 });
 
-  document.querySelectorAll('.media--square').forEach((video) => {
+  for (const video of clips) {
+    if (reduceMotion.matches) {
+      video.removeAttribute('autoplay');
+      video.pause();
+      needsTap(video, true);
+    }
+
     observer.observe(video);
-  });
+
+    // Only reachable once the fallback has turned pointer events back on.
+    video.addEventListener('click', () => {
+      video.play()?.then(() => needsTap(video, false)).catch(() => {});
+    });
+  }
 </script>
 
 </body>
